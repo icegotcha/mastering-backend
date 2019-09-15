@@ -2,49 +2,7 @@ import {Request, Response} from 'express'
 import {WebhookRequestBody} from '@line/bot-sdk'
 
 import {client} from './line'
-
-const reply = (text: string, userId: string) => {
-  if (/พระโทรศัพท์ได้วันไหน/.test(text)) {
-    return client
-      .pushMessage(userId, {
-        type: 'text',
-        text: 'วันพุธ',
-      })
-      .then(() =>
-        client.pushMessage(userId, {
-          type: 'text',
-          text: 'พุทโธ พุทโธ',
-        }),
-      )
-  }
-
-  if (/ไม่ขำ/.test(text)) {
-    return client
-      .pushMessage(userId, {
-        type: 'text',
-        text: 'แง่ว ~',
-      })
-      .then(() =>
-        client.pushMessage(userId, {
-          type: 'text',
-          text: 'ขอโทษฮับ ผมไม่เก่งด้านนี้เลย 😭',
-        }),
-      )
-  }
-
-  if (/ส่งจุ๊บ/.test(text)) {
-    return client.pushMessage(userId, {
-      type: 'sticker',
-      packageId: '11537',
-      stickerId: '52002736',
-    })
-  }
-
-  return client.pushMessage(userId, {
-    type: 'text',
-    text: 'สวัสดีฮับ จุ๊บุ๊ จุ๊บุ๊',
-  })
-}
+import { bot } from './bot';
 
 export async function webhookHandler(req: Request, _res: Response) {
   try {
@@ -64,7 +22,13 @@ export async function webhookHandler(req: Request, _res: Response) {
       const {text} = event.message
       console.log('💬:', text)
 
-      await reply(text, userId)
+      const reply = await bot(text)
+
+      client
+        .pushMessage(userId, {
+          type: 'text',
+          text: reply,
+        })
     }
   } catch (error) {
     console.error(error.message)
