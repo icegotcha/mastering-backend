@@ -1,4 +1,4 @@
-import {BotContext} from './bot_context'
+import {BotContext} from './botContext'
 import {mockMenuResponse} from './mockMaidCafeResponse'
 
 export function mockBotContext(): BotContext {
@@ -8,16 +8,14 @@ export function mockBotContext(): BotContext {
       return '192.168.112.44'
     },
     async getCafeMenu() {
-      const data = mockMenuResponse.data['best seller']['kuma dreamin'].name.th
+      const data = mockMenuResponse
       return data
     },
     async savePurchases(num: number) {
       this.bookPhurchasing.push(num)
     },
     async getTotalPurchases() {
-      return this.bookPhurchasing.reduce(
-        (totalPurchases, num) => totalPurchases + num,
-      )
+      return this.bookPhurchasing.reduce((total, num) => total + num)
     },
   }
 }

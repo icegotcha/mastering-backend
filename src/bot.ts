@@ -1,4 +1,4 @@
-import {BotContext} from './bot_context'
+import {BotContext} from './botContext'
 import {defaultBotContext} from './defaultBotContext'
 
 export const bot = async (
@@ -34,7 +34,10 @@ export const bot = async (
   }
 
   if (/cafe|คาเฟ่/.test(text)) {
-    const random = await botContext.getCafeMenu()
+    const menu = await botContext.getCafeMenu();
+    const keys = Object.keys(menu.data['best seller'])
+    const randomIndex = Math.floor(Math.random() * keys.length)
+    const random =   menu.data['best seller'][keys[randomIndex]].name.th;
     return `${random} ดีไหมฮับ?`
   }
 

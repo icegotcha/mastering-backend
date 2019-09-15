@@ -4,8 +4,6 @@ import {WebhookRequestBody} from '@line/bot-sdk'
 import {client} from './line'
 import { bot } from './bot';
 
-import {Bot} from './Bot'
-
 export async function webhookHandler(req: Request, _res: Response) {
   try {
     const {events} = req.body as WebhookRequestBody
