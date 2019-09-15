@@ -1,5 +1,5 @@
+import {MaidCafeMenuResponse} from './types/cafeMenu'
 export interface BotContext {
-    getIP: () => Promise<string>,
-    getMaidreaminCafeMenu: () => Promise<string>,
+  getIP: () => Promise<string>
+  getCafeMenu: () => Promise<string>
 }
-
